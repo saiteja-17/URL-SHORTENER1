@@ -1,0 +1,28 @@
+import hashlib
+
+class URLShortener:
+    def __init__(self):
+        self.url_map = {}
+
+    def shorten_url(self, original_url):
+        # Generate a hash of the original URL
+        url_hash = hashlib.md5(original_url.encode()).hexdigest()[:8]
+
+        # Create a shortened URL using the hash
+        shortened_url = f"https://short.ly/{url_hash}"
+
+        # Store the mapping between the original and shortened URLs
+        self.url_map[shortened_url] = original_url
+
+        return shortened_url
+
+    def get_original_url(self, shortened_url):
+        # Retrieve the original URL from the mapping
+        return self.url_map.get(shortened_url)
+
+# Usage example
+shortener = URLShortener()
+original_url = "https://www.example.com/some/long/url"
+shortened_url = shortener.shorten_url(original_url)
+print(f"Shortened URL: {shortened_url}")
+print(f"Original URL: {shortener.get_original_url(shortened_url)}")
